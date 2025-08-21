@@ -1962,7 +1962,7 @@
         <div class="tmpe-status-container">
           <div class="tmpe-status-badge">
             <span class="tmpe-status-dot ${currentStatus.dot}"></span>
-            <span>${currentStatus.text}</span>
+            <span style="color: #121212 !important; font-weight: 600 !important;">${currentStatus.text}</span>
           </div>
           <span class="tmpe-date-text">${button.date}</span>
         </div>
@@ -1989,7 +1989,7 @@
             <span class="tmpe-date-text">${button.date}</span>
             <div class="tmpe-status-badge">
               <span class="tmpe-status-dot ${currentStatus.dot}"></span>
-              <span>${currentStatus.text}</span>
+              <span style="color: #121212 !important; font-weight: 600 !important;">${currentStatus.text}</span>
             </div>
           </div>
         </div>
@@ -2121,6 +2121,12 @@
   height: 22px;
   letter-spacing: 0.24px;
   line-height: 20px;
+}
+
+/* Regla de alta especificidad para sobrescribir .ticketmaster global */
+.tmpe-container .tmpe-status-badge span {
+  color: #121212 !important;
+  font-weight: 600 !important;
 }
 
 .tmpe-status-dot {
