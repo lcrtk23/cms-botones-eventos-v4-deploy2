@@ -1559,9 +1559,9 @@
                       </div>
                     </div>
                   </div>
-                <div style="width: 36px; height: 36px; border-radius: 50%; background: ${button.status === 'soon' ? '#949494' : button.status === 'canceled' ? 'white' : button.status === 'soldout' ? '#949494' : '#024DDF'}; display: flex; align-items: center; justify-content: center; border: ${button.status === 'canceled' ? '1px solid #024DDF' : 'none'}; cursor: ${button.status === 'soon' || button.status === 'soldout' ? 'not-allowed' : 'pointer'}; color: ${button.status === 'soon' ? 'white' : button.status === 'canceled' ? '#024DDF' : 'white'}; text-decoration: none; transition: background-color 0.2s ease; align-self: flex-start;">
-                  ${button.status === 'soon' ? 
-                    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : 
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: ${button.status === 'soon' || button.status === 'soldout' ? '#EBEBEB' : button.status === 'canceled' ? 'white' : '#024DDF'}; display: flex; align-items: center; justify-content: center; border: ${button.status === 'canceled' ? '1px solid #024DDF' : 'none'}; cursor: ${button.status === 'soon' || button.status === 'soldout' ? 'not-allowed' : 'pointer'}; color: ${button.status === 'canceled' ? '#024DDF' : 'white'}; text-decoration: none; transition: background-color 0.2s ease; align-self: flex-start;">
+                  ${button.status === 'soon' || button.status === 'soldout' ? 
+                    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="#949494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : 
                     '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
                   }
                   </div>
@@ -1925,9 +1925,9 @@
         // Generar botón móvil según estado
         let mobileButton;
         if (button.status === 'soon') {
-          mobileButton = `<div class="tmpe-link-mobile" style="background: #949494;">
+          mobileButton = `<div class="tmpe-link-mobile" style="background: #EBEBEB;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M9 6L15 12L9 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 6L15 12L9 18" stroke="#949494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>`;
         } else if (button.status === 'canceled') {
@@ -1937,9 +1937,9 @@
             </svg>
           </div>`;
         } else if (button.status === 'soldout') {
-          mobileButton = `<div class="tmpe-link-mobile" style="background: #949494;">
+          mobileButton = `<div class="tmpe-link-mobile" style="background: #EBEBEB;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M9 6L15 12L9 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 6L15 12L9 18" stroke="#949494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>`;
         } else {
