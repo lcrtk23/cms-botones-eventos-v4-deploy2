@@ -1537,7 +1537,7 @@
           }
           
           // Determinar si el botón debe ser clickeable
-          const isClickable = button.status !== 'soldout';
+          const isClickable = button.status !== 'soldout' && button.status !== 'soon';
           const mobileWrapper = isClickable ? 
             `<a href="${button.link}" style="display: flex; width: 100%; padding: 20px 12px; gap: 16px; align-items: flex-start; text-decoration: none !important; color: inherit; cursor: pointer;">` :
             `<div style="display: flex; width: 100%; padding: 20px 12px; gap: 16px; align-items: flex-start; text-decoration: none !important; color: inherit; cursor: default;">`;
@@ -1559,9 +1559,9 @@
                       </div>
                     </div>
                   </div>
-                <div style="width: 36px; height: 36px; border-radius: 50%; background: ${button.status === 'soon' ? '#FFF' : button.status === 'canceled' ? 'white' : button.status === 'soldout' ? '#949494' : '#024DDF'}; display: flex; align-items: center; justify-content: center; border: ${button.status === 'soon' || button.status === 'canceled' ? '0.818px solid #D6D6D6' : 'none'}; cursor: pointer; color: ${button.status === 'soon' ? '#646464' : button.status === 'canceled' ? '#024DDF' : 'white'}; text-decoration: none; transition: background-color 0.2s ease; align-self: flex-start; ${button.status === 'soon' ? 'box-shadow: 0px 4.909px 9.818px 0px rgba(0, 0, 0, 0.06);' : ''}">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: ${button.status === 'soon' ? '#949494' : button.status === 'canceled' ? 'white' : button.status === 'soldout' ? '#949494' : '#024DDF'}; display: flex; align-items: center; justify-content: center; border: ${button.status === 'canceled' ? '1px solid #024DDF' : 'none'}; cursor: ${button.status === 'soon' || button.status === 'soldout' ? 'not-allowed' : 'pointer'}; color: ${button.status === 'soon' ? 'white' : button.status === 'canceled' ? '#024DDF' : 'white'}; text-decoration: none; transition: background-color 0.2s ease; align-self: flex-start;">
                   ${button.status === 'soon' ? 
-                    '<img src="https://prod-assets.tmlat.com/Bell_efe9ad8429.svg" width="16" height="16" alt="Bell icon" style="filter: brightness(0) saturate(100%) invert(42%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(96%) contrast(85%);">' : 
+                    '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' : 
                     '<svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
                   }
                   </div>
@@ -1614,10 +1614,10 @@
           let buttonElement;
           if (button.status === 'soon') {
             buttonElement = `
-              <button style="background: #FFFFFF; color: #646464; border: 1px solid #D6D6D6; border-radius: 23px; padding: 6px 12px; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; margin-left: auto; text-decoration: none; box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.06); height: 39px; min-width: auto; justify-content: center; font-family: 'Averta', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-                <img src="https://prod-assets.tmlat.com/Bell_efe9ad8429.svg" width="16" height="16" alt="Bell icon">
-                Recordármelo
-        </button>
+              <div style="background: #EBEBEB; color: #949494; cursor: not-allowed; border-radius: 4px; padding: 16px 40px; font-size: 16px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; margin-left: auto; text-decoration: none; letter-spacing: 0.32px; line-height: 24px; height: 48px; min-width: 150px; justify-content: center; font-family: 'Averta', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                ${button.buttonText}
+                <svg width="20" height="20" viewBox="0 0 20 20"><polyline points="7 5 13 10 7 15" fill="none" stroke="#949494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
             `;
       } else {
             let buttonStyle;
@@ -1893,9 +1893,11 @@
         // Generar botón desktop según estado
         let desktopButton;
         if (button.status === 'soon') {
-          desktopButton = `<div class="tmpe-link-reminder" style="background: #FFFFFF; color: #646464; border: 1px solid #D6D6D6; border-radius: 23px; padding: 6px 12px; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; margin-left: auto; text-decoration: none; box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.06); height: 39px; min-width: auto; justify-content: center; font-family: 'Averta', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-            <img src="https://prod-assets.tmlat.com/Bell_efe9ad8429.svg" width="16" height="16" alt="Bell icon" style="filter: brightness(0) saturate(100%) invert(42%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(96%) contrast(85%);">
-            Recordármelo
+          desktopButton = `<div class="tmpe-link-details" style="background: #EBEBEB; color: #949494; cursor: not-allowed;">
+            ${button.buttonText}
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <polyline points="7 5 13 10 7 15" fill="none" stroke="#949494" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>`;
         } else if (button.status === 'canceled') {
           desktopButton = `<a href="${button.link}" class="tmpe-link-details" style="background: white; color: #024DDF; border: 1px solid #024DDF;">
@@ -1923,8 +1925,10 @@
         // Generar botón móvil según estado
         let mobileButton;
         if (button.status === 'soon') {
-          mobileButton = `<div class="tmpe-link-mobile" style="background: #FFF; border: 0.818px solid #D6D6D6; border-radius: 350px; box-shadow: 0px 4.909px 9.818px 0px rgba(0, 0, 0, 0.06);">
-            <img src="https://prod-assets.tmlat.com/Bell_efe9ad8429.svg" width="16" height="16" alt="Bell icon" style="filter: brightness(0) saturate(100%) invert(42%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(96%) contrast(85%);">
+          mobileButton = `<div class="tmpe-link-mobile" style="background: #949494;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 6L15 12L9 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>`;
         } else if (button.status === 'canceled') {
           mobileButton = `<div class="tmpe-link-mobile" style="background: white; border: 1px solid #024DDF;">
