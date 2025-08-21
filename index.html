@@ -1751,7 +1751,7 @@
         codeModal.style.display = 'none';
       }
       // Solo cerrar el modal del editor si se hace clic en el overlay (fondo oscuro)
-      if (e.target === buttonEditorModal && e.target.classList.contains('modal-overlay')) {
+      if (e.target.classList.contains('modal-overlay') && e.target === buttonEditorModal) {
         closeButtonEditor();
       }
     });
