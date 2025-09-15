@@ -4,7 +4,7 @@ Panel CMS para crear y personalizar botones de venta de eventos - Vista previa e
 
 ## 🚀 Demo en Vivo
 
-**[Acceder al CMS →](https://viernesenvenus.github.io/cms-botones-eventos-v4/)**
+**[Acceder al CMS →](https://tk-button-component.vercel.app/)**
 
 ## 📱 Características
 
@@ -17,7 +17,7 @@ Panel CMS para crear y personalizar botones de venta de eventos - Vista previa e
 
 ## 🎯 Uso
 
-1. Accede al [Panel CMS](https://viernesenvenus.github.io/cms-botones-eventos-v3/)
+1. Accede al [Panel CMS](https://tk-button-component.vercel.app/)
 2. Configura los detalles de tu evento
 3. Personaliza el botón de venta
 4. Obtén el código HTML generado
