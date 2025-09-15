@@ -387,6 +387,14 @@
       margin-bottom: 0px;
     }
 
+    .modal-form-container {
+      position: relative;
+      z-index: 1;
+      background: white;
+      padding: 0px;
+      border-radius: 8px;
+    }
+
     .form-group label {
       display: block;
       font-weight: 600;
@@ -1161,6 +1169,7 @@
       </div>
       
       <form id="button-editor-form">
+        <div class="modal-form-container" onclick="event.stopPropagation()">
           <div class="form-row">
             <div class="form-col">
               <div class="form-group">
@@ -1202,25 +1211,26 @@
             </div>
           </div>
           
-        <div class="form-group" id="custom-logo-group" style="display: none;">
-          <label for="custom-logo-url">URL del Logo Personalizado</label>
-          <input type="url" id="custom-logo-url" placeholder="https://ejemplo.com/logo.png">
-        </div>
-        
-              <div class="form-group">
-                <label for="button-text">Texto del Botón</label>
-          <input type="text" id="button-text" placeholder="Comprar ahora" value="Comprar ahora" required>
+          <div class="form-group" id="custom-logo-group" style="display: none;">
+            <label for="custom-logo-url">URL del Logo Personalizado</label>
+            <input type="url" id="custom-logo-url" placeholder="https://ejemplo.com/logo.png">
           </div>
           
-              <div class="form-group">
-                <label for="button-link">Link de Redirección</label>
-          <input type="url" id="button-link" placeholder="https://ejemplo.com/comprar" required>
+          <div class="form-group">
+            <label for="button-text">Texto del Botón</label>
+            <input type="text" id="button-text" placeholder="Comprar ahora" value="Comprar ahora" required>
           </div>
+          
+          <div class="form-group">
+            <label for="button-link">Link de Redirección</label>
+            <input type="url" id="button-link" placeholder="https://ejemplo.com/comprar" required>
+          </div>
+        </div>
           
         <div class="form-actions">
           <button type="submit" id="save-button" class="btn-save">Guardar</button>
           <button type="button" id="cancel-button" class="btn-cancel">Cancelar</button>
-            </div>
+        </div>
       </form>
             </div>
           </div>
@@ -1359,6 +1369,11 @@
     function openButtonEditor(buttonId = null) {
       editingButtonId = buttonId;
       buttonEditorModal.style.display = 'flex';
+      
+      // Configurar protección de inputs cada vez que se abre el modal
+      setTimeout(() => {
+        setupModalInputProtection();
+      }, 10);
 
       if (buttonId) {
         const button = buttons.find(b => b.id === buttonId);
@@ -1703,6 +1718,8 @@
     closeButtonModal.addEventListener('click', closeButtonEditor);
     buttonType.addEventListener('change', handleTypeChange);
     
+    // La protección de inputs ahora se maneja a través del contenedor modal-form-container
+    
     showCodeButton.addEventListener('click', generateGlobalCode);
     closeModal.addEventListener('click', () => codeModal.style.display = 'none');
     
@@ -1747,11 +1764,13 @@
 
     // Cerrar modales al hacer clic fuera
     window.addEventListener('click', (e) => {
+      // Cerrar modal de código
       if (e.target === codeModal) {
         codeModal.style.display = 'none';
       }
-      // Solo cerrar el modal del editor si se hace clic en el overlay (fondo oscuro)
-      if (e.target.classList.contains('modal-overlay') && e.target === buttonEditorModal) {
+      
+      // Cerrar modal del editor solo si se hace clic en el overlay
+      if (e.target === buttonEditorModal) {
         closeButtonEditor();
       }
     });
