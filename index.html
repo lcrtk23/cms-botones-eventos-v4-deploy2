@@ -1906,7 +1906,7 @@
           logoUrl = button.customLogoUrl || 'https://via.placeholder.com/56x56/000000/FFFFFF?text=LOGO';
           logoClass = 'tmpe-logo-custom';
         } else if (button.type === 'interbank') {
-          logoUrl = 'https://prod-assets.tmlat.com/interbank_svg_f81dc84322.svg';
+          logoUrl = 'https://prod-assets.tmlat.com/Interbank_a8078b3014.png';
           logoClass = 'tmpe-logo-interbank';
         } else if (button.type === 'ticketmaster') {
           logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
@@ -2088,6 +2088,12 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
+  background: #FFFFFF !important;
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .tmpe-logo-interbank {
@@ -2103,9 +2109,16 @@
 }
 
 .tmpe-logo-img {
-  width: 65%;
-  height: 65%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 0;
+  margin: 0;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .tmpe-info-container {
@@ -2279,6 +2292,12 @@
     border-radius: 2.68px;
     margin-top: 0;
     align-self: flex-start;
+    overflow: hidden;
+    background: #FFFFFF !important;
+    transform: translateZ(0);
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   
   .tmpe-container .tmpe-ticket-title {
