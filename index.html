@@ -777,6 +777,18 @@
       background: #0744BD;
     }
 
+    .tmpe-logo-bcp {
+      background: #FFFFFF;
+    }
+
+    .tmpe-logo-comercio {
+      background: #FFFFFF;
+    }
+
+    .tmpe-logo-bbva {
+      background: #FFFFFF;
+    }
+
     .tmpe-logo-custom {
       background: #000000;
     }
@@ -1192,6 +1204,9 @@
                 <option value="">Seleccionar tipo</option>
                   <option value="interbank">Venta Interbank</option>
                   <option value="ticketmaster">Venta General</option>
+                  <option value="bcp">Venta BCP</option>
+                  <option value="comercio">Venta Comercio</option>
+                  <option value="bbva">Venta BBVA</option>
                   <option value="custom">Venta Personalizada</option>
                 </select>
               </div>
@@ -1441,6 +1456,9 @@
       const isDefaultTitle = currentTitle === '' || 
                            currentTitle === 'VENTA INTERBANK' || 
                            currentTitle === 'VENTA GENERAL' || 
+                           currentTitle === 'VENTA BCP' ||
+                           currentTitle === 'VENTA COMERCIO' ||
+                           currentTitle === 'VENTA BBVA' ||
                            currentTitle === 'VENTA PERSONALIZADA';
       
       if (isDefaultTitle) {
@@ -1450,6 +1468,15 @@
             break;
           case 'ticketmaster':
             buttonTitle.value = 'VENTA GENERAL';
+            break;
+          case 'bcp':
+            buttonTitle.value = 'VENTA BCP';
+            break;
+          case 'comercio':
+            buttonTitle.value = 'VENTA COMERCIO';
+            break;
+          case 'bbva':
+            buttonTitle.value = 'VENTA BBVA';
             break;
           case 'custom':
             buttonTitle.value = 'VENTA PERSONALIZADA';
@@ -1553,6 +1580,15 @@
           } else if (button.type === 'ticketmaster') {
             logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
             logoStyle = 'background: #0744BD;';
+          } else if (button.type === 'bcp') {
+            logoUrl = 'https://prod-assets.tmlat.com/Property_1_bcp_a58059fb93.png';
+            logoStyle = 'background: #FFFFFF;';
+          } else if (button.type === 'comercio') {
+            logoUrl = 'https://prod-assets.tmlat.com/Property_1_Comercio_8895635e63.png';
+            logoStyle = 'background: #FFFFFF;';
+          } else if (button.type === 'bbva') {
+            logoUrl = 'https://prod-assets.tmlat.com/BVVA_603578b21d.png';
+            logoStyle = 'background: #FFFFFF;';
           }
 
           // Determinar color del status dot
@@ -1627,6 +1663,15 @@
           } else if (button.type === 'ticketmaster') {
             logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
             logoStyle = 'background: #0744BD;';
+          } else if (button.type === 'bcp') {
+            logoUrl = 'https://prod-assets.tmlat.com/Property_1_bcp_a58059fb93.png';
+            logoStyle = 'background: #FFFFFF;';
+          } else if (button.type === 'comercio') {
+            logoUrl = 'https://prod-assets.tmlat.com/Property_1_Comercio_8895635e63.png';
+            logoStyle = 'background: #FFFFFF;';
+          } else if (button.type === 'bbva') {
+            logoUrl = 'https://prod-assets.tmlat.com/BVVA_603578b21d.png';
+            logoStyle = 'background: #FFFFFF;';
           }
 
           // Determinar color del status dot
@@ -1911,6 +1956,15 @@
         } else if (button.type === 'ticketmaster') {
           logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
           logoClass = 'tmpe-logo-ticketmaster';
+        } else if (button.type === 'bcp') {
+          logoUrl = 'https://prod-assets.tmlat.com/Property_1_bcp_a58059fb93.png';
+          logoClass = 'tmpe-logo-bcp';
+        } else if (button.type === 'comercio') {
+          logoUrl = 'https://prod-assets.tmlat.com/Property_1_Comercio_8895635e63.png';
+          logoClass = 'tmpe-logo-comercio';
+        } else if (button.type === 'bbva') {
+          logoUrl = 'https://prod-assets.tmlat.com/BVVA_603578b21d.png';
+          logoClass = 'tmpe-logo-bbva';
         }
 
         // Mapeo de estados
@@ -2102,6 +2156,18 @@
 
 .tmpe-logo-ticketmaster {
   background: #0744BD;
+}
+
+.tmpe-logo-bcp {
+  background: #FFFFFF;
+}
+
+.tmpe-logo-comercio {
+  background: #FFFFFF;
+}
+
+.tmpe-logo-bbva {
+  background: #FFFFFF;
 }
 
 .tmpe-logo-custom {
