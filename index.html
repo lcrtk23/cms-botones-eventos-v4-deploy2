@@ -761,6 +761,12 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      overflow: hidden;
+      background: #FFFFFF !important;
+      transform: translateZ(0);
+      will-change: transform;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .tmpe-logo-interbank {
@@ -776,9 +782,16 @@
     }
 
     .tmpe-logo-img {
-      width: 65%;
-      height: 65%;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      padding: 0;
+      margin: 0;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      -ms-interpolation-mode: nearest-neighbor;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .tmpe-info-container {
@@ -1535,7 +1548,7 @@
             logoUrl = button.customLogoUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iIzAyNERERiIvPgo8cGF0aCBkPSJNMjAgMTBWMzBNMTAgMjBIMzAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPgo=';
             logoStyle = 'background: #000000;';
           } else if (button.type === 'interbank') {
-            logoUrl = 'https://prod-assets.tmlat.com/interbank_svg_f81dc84322.svg';
+            logoUrl = 'https://prod-assets.tmlat.com/Interbank_a8078b3014.png';
             logoStyle = 'background: #1A1A1A;';
           } else if (button.type === 'ticketmaster') {
             logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
@@ -1562,8 +1575,8 @@
           html += `
             <div style="width: 380px; max-width: 380px; margin: 0 auto; background: #fff; border-bottom: 1px solid #D6D6D6; overflow: hidden;">
               ${mobileWrapper}
-                <div style="width: 42px; height: 40px; border-radius: 2.68px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; ${logoStyle}">
-                  <img src="${logoUrl}" alt="Logo" style="width: 65%; height: 65%; object-fit: contain;">
+                <div style="width: 42px; height: 40px; border-radius: 2.68px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; background: #FFFFFF !important; transform: translateZ(0); will-change: transform; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; ${logoStyle}">
+                  <img src="${logoUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; padding: 0; margin: 0;">
                   </div>
                 <div style="flex: 1;">
                   <h2 style="font-size: 18px; line-height: 20px; letter-spacing: 0.32px; color: #121212; margin-bottom: 2px; font-weight: 700;">${button.title}</h2>
@@ -1609,7 +1622,7 @@
             logoUrl = button.customLogoUrl || 'https://via.placeholder.com/56x56';
             logoStyle = 'background: #000000;';
           } else if (button.type === 'interbank') {
-            logoUrl = 'https://prod-assets.tmlat.com/interbank_svg_f81dc84322.svg';
+            logoUrl = 'https://prod-assets.tmlat.com/Interbank_a8078b3014.png';
             logoStyle = 'background: #1A1A1A;';
           } else if (button.type === 'ticketmaster') {
             logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
@@ -1663,9 +1676,9 @@
           html += `
             <div style="width: 800px; max-width: 700px; margin: 0 auto; background: #fff; border-bottom: 1px solid #D6D6D6; overflow: hidden;">
               <div style="display: flex; align-items: center; padding: 20px 24px; position: relative; justify-content: space-between; gap: 24px;">
-                <div style="width: 56px; height: 56px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; ${logoStyle}">
-                  <img src="${logoUrl}" alt="Logo" style="width: 65%; height: 65%; object-fit: contain;">
-      </div>
+                <div style="width: 56px; height: 56px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; background: #FFFFFF !important; transform: translateZ(0); will-change: transform; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; ${logoStyle}">
+                  <img src="${logoUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; padding: 0; margin: 0;">
+                  </div>
                 <div style="flex: 1;">
                   <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #262626; letter-spacing: 0.4px; line-height: 20px;">${button.title}</h2>
                   <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
