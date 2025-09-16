@@ -774,7 +774,7 @@
     }
 
     .tmpe-logo-ticketmaster {
-      background: #0744BD;
+      background: #FFFFFF;
     }
 
     .tmpe-logo-bcp {
@@ -790,7 +790,7 @@
     }
 
     .tmpe-logo-custom {
-      background: #000000;
+      background: #FFFFFF;
     }
 
     .tmpe-logo-img {
@@ -1196,21 +1196,38 @@
       
       <form id="button-editor-form">
         <div class="modal-form-container" onclick="event.stopPropagation()">
+          <!-- Fila 1: Tipo de Venta y Título -->
           <div class="form-row">
             <div class="form-col">
               <div class="form-group">
                 <label for="button-type">Tipo de Venta</label>
               <select id="button-type" required>
                 <option value="">Seleccionar tipo</option>
-                  <option value="interbank">Venta Interbank</option>
                   <option value="ticketmaster">Venta General</option>
-                  <option value="bcp">Venta BCP</option>
-                  <option value="comercio">Venta Comercio</option>
+                  <option value="interbank">Venta Interbank</option>
                   <option value="bbva">Venta BBVA</option>
+                  <option value="comercio">Venta Comercio</option>
+                  <option value="bcp">Venta BCP</option>
                   <option value="custom">Venta Personalizada</option>
                 </select>
               </div>
             </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label for="button-title">Título</label>
+              <input type="text" id="button-title" placeholder="VENTA INTERBANK" required>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Logo personalizado (solo para venta personalizada) -->
+            <div class="form-group" id="custom-logo-group" style="display: none;">
+              <label for="custom-logo-url">URL del Logo Personalizado</label>
+             <input type="url" id="custom-logo-url" placeholder="https://ejemplo.com/logo.png" value="https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png">
+            </div>
+          
+          <!-- Fila 2: Estado y Texto del Estado -->
+          <div class="form-row">
             <div class="form-col">
               <div class="form-group">
                 <label for="button-status">Estado</label>
@@ -1223,36 +1240,38 @@
                 </select>
               </div>
             </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-col">
+            <div class="form-col" id="status-text-col" style="display: none;">
               <div class="form-group">
-                <label for="button-title">Título</label>
-              <input type="text" id="button-title" placeholder="VENTA INTERBANK" required>
+                <label for="status-display-text">Texto del Estado</label>
+                <input type="text" id="status-display-text" placeholder="Texto visible del estado" required>
               </div>
             </div>
+          </div>
+          
+          <!-- Fila 3: Inicio de Venta y Texto del Botón -->
+          <div class="form-row">
             <div class="form-col">
               <div class="form-group">
                 <label for="sale-date">Inicio de Venta</label>
               <input type="text" id="sale-date" placeholder="Desde 01/04 • 14:30" required>
               </div>
             </div>
+            <div class="form-col">
+              <div class="form-group">
+                <label for="button-text">Texto del Botón</label>
+                <input type="text" id="button-text" placeholder="Comprar ahora" value="Comprar ahora" required>
+              </div>
+            </div>
           </div>
           
-          <div class="form-group" id="custom-logo-group" style="display: none;">
-            <label for="custom-logo-url">URL del Logo Personalizado</label>
-            <input type="url" id="custom-logo-url" placeholder="https://ejemplo.com/logo.png">
-          </div>
-          
-          <div class="form-group">
-            <label for="button-text">Texto del Botón</label>
-            <input type="text" id="button-text" placeholder="Comprar ahora" value="Comprar ahora" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="button-link">Link de Redirección</label>
-            <input type="url" id="button-link" placeholder="https://ejemplo.com/comprar" required>
+          <!-- Fila 4: Link de Redirección (ancho completo) -->
+          <div class="form-row">
+            <div class="form-col">
+              <div class="form-group">
+                <label for="button-link">Link de Redirección</label>
+                <input type="url" id="button-link" placeholder="https://ejemplo.com/comprar" required>
+              </div>
+            </div>
           </div>
         </div>
           
@@ -1314,6 +1333,8 @@
     // Elementos del formulario
     const buttonType = document.getElementById('button-type');
     const buttonStatus = document.getElementById('button-status');
+    const statusDisplayText = document.getElementById('status-display-text');
+    const statusTextCol = document.getElementById('status-text-col');
     const buttonTitle = document.getElementById('button-title');
     const saleDate = document.getElementById('sale-date');
     const buttonText = document.getElementById('button-text');
@@ -1327,10 +1348,10 @@
 
     // Configuración de estados
     const statusConfig = {
-      available: { text: 'DISPONIBLE', class: 'status-available' },
-      soon: { text: 'PRÓXIMAMENTE', class: 'status-soon' },
-      soldout: { text: 'AGOTADO', class: 'status-soldout' },
-      canceled: { text: 'CANCELADO', class: 'status-canceled' }
+      available: { text: 'DISPONIBLE', displayText: 'Disponible', class: 'status-available' },
+      soon: { text: 'PRÓXIMAMENTE', displayText: 'Próximamente', class: 'status-soon' },
+      soldout: { text: 'AGOTADO', displayText: 'Agotado', class: 'status-soldout' },
+      canceled: { text: 'CANCELADO', displayText: 'Cancelado', class: 'status-canceled' }
     };
 
     // Funciones principales
@@ -1410,21 +1431,26 @@
           formTitle.textContent = `Editar: ${button.title}`;
           buttonType.value = button.type;
           buttonStatus.value = button.status;
+          statusDisplayText.value = button.statusDisplayText || statusConfig[button.status]?.displayText || '';
           buttonTitle.value = button.title;
           saleDate.value = button.date;
           buttonText.value = button.buttonText;
           buttonLink.value = button.link;
           
-          if (button.type === 'custom' && button.customLogoUrl) {
-            customLogoUrl.value = button.customLogoUrl;
+          if (button.type === 'custom') {
+            customLogoUrl.value = button.customLogoUrl || 'https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png';
           }
           
           handleTypeChange();
+          handleStatusChange(); // Asegurar que el campo de texto se muestre si hay estado
         }
       } else {
         formTitle.textContent = 'Crear Nuevo Botón';
         buttonType.value = '';
         buttonStatus.value = '';
+        statusDisplayText.value = '';
+        statusTextCol.style.display = 'none';
+        statusDisplayText.required = false;
         buttonTitle.value = '';
         saleDate.value = '';
         buttonText.value = 'Comprar ahora';
@@ -1446,6 +1472,7 @@
         if (type === 'custom') {
         customLogoGroup.style.display = 'block';
         customLogoUrl.required = true;
+        customLogoUrl.value = 'https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png';
         } else {
         customLogoGroup.style.display = 'none';
         customLogoUrl.required = false;
@@ -1487,10 +1514,33 @@
       }
     }
 
+    function handleStatusChange() {
+      const status = buttonStatus.value;
+      if (status && statusConfig[status]) {
+        // Mostrar el campo de texto del estado
+        statusTextCol.style.display = 'block';
+        statusDisplayText.required = true;
+        
+        // Solo autocompletar si el campo está vacío o tiene el texto por defecto
+        const currentText = statusDisplayText.value;
+        const defaultText = statusConfig[status].displayText;
+        
+        if (!currentText || currentText === defaultText || 
+            Object.values(statusConfig).some(config => config.displayText === currentText)) {
+          statusDisplayText.value = defaultText;
+        }
+      } else {
+        // Ocultar el campo si no hay estado seleccionado
+        statusTextCol.style.display = 'none';
+        statusDisplayText.required = false;
+        statusDisplayText.value = '';
+      }
+    }
+
     function saveButtonData(e) {
       e.preventDefault();
       
-      if (!buttonType.value || !buttonStatus.value || !buttonTitle.value || 
+      if (!buttonType.value || !buttonStatus.value || !statusDisplayText.value || !buttonTitle.value || 
           !saleDate.value || !buttonText.value || !buttonLink.value) {
         alert('Todos los campos son obligatorios');
           return;
@@ -1504,6 +1554,7 @@
       const buttonData = {
         type: buttonType.value,
         status: buttonStatus.value,
+        statusDisplayText: statusDisplayText.value,
         title: buttonTitle.value,
         date: saleDate.value,
         buttonText: buttonText.value,
@@ -1568,18 +1619,19 @@
           };
 
           const status = statusConfig[button.status];
+          const displayText = button.statusDisplayText || status.displayText || status.text;
           
           // Determinar logo URL y estilo
           let logoUrl, logoStyle;
           if (button.type === 'custom') {
-            logoUrl = button.customLogoUrl || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iNCIgZmlsbD0iIzAyNERERiIvPgo8cGF0aCBkPSJNMjAgMTBWMzBNMTAgMjBIMzAiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPgo=';
-            logoStyle = 'background: #000000;';
+            logoUrl = button.customLogoUrl || 'https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png';
+            logoStyle = 'background: #FFFFFF;';
           } else if (button.type === 'interbank') {
             logoUrl = 'https://prod-assets.tmlat.com/Interbank_a8078b3014.png';
             logoStyle = 'background: #1A1A1A;';
           } else if (button.type === 'ticketmaster') {
-            logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
-            logoStyle = 'background: #0744BD;';
+            logoUrl = 'https://prod-assets.tmlat.com/Property_1_tk_geneal_35086c9515.png';
+            logoStyle = 'background: #FFFFFF;';
           } else if (button.type === 'bcp') {
             logoUrl = 'https://prod-assets.tmlat.com/Property_1_bcp_a58059fb93.png';
             logoStyle = 'background: #FFFFFF;';
@@ -1612,7 +1664,7 @@
             <div style="width: 380px; max-width: 380px; margin: 0 auto; background: #fff; border-bottom: 1px solid #D6D6D6; overflow: hidden;">
               ${mobileWrapper}
                 <div style="width: 42px; height: 40px; border-radius: 2.68px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; background: #FFFFFF !important; transform: translateZ(0); will-change: transform; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; ${logoStyle}">
-                  <img src="${logoUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; padding: 0; margin: 0;">
+                  <img src="${logoUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; padding: 0; margin: 0;" onerror="this.src='https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png'">
                   </div>
                 <div style="flex: 1;">
                   <h2 style="font-size: 18px; line-height: 20px; letter-spacing: 0.32px; color: #121212; margin-bottom: 2px; font-weight: 700;">${button.title}</h2>
@@ -1620,7 +1672,7 @@
                     <span style="font-size: 14px; line-height: 20px; letter-spacing: 0.28px; color: #828282;">${button.date}</span>
                     <div style="display: flex; align-items: center; gap: 4px; border: 1px solid #D6D6D6; border-radius: 4px; padding: 4px 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.24px; line-height: 20px; color: #121212;">
                       <span style="width: 10px; height: 10px; border-radius: 50%; background: ${dotColor};"></span>
-                      ${status.text}
+                      ${displayText}
                       </div>
                     </div>
                   </div>
@@ -1651,18 +1703,19 @@
           };
 
           const status = statusConfig[button.status];
+          const displayText = button.statusDisplayText || status.displayText || status.text;
           
           // Determinar logo URL y clase
           let logoUrl, logoStyle;
           if (button.type === 'custom') {
-            logoUrl = button.customLogoUrl || 'https://via.placeholder.com/56x56';
-            logoStyle = 'background: #000000;';
+            logoUrl = button.customLogoUrl || 'https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png';
+            logoStyle = 'background: #FFFFFF;';
           } else if (button.type === 'interbank') {
             logoUrl = 'https://prod-assets.tmlat.com/Interbank_a8078b3014.png';
             logoStyle = 'background: #1A1A1A;';
           } else if (button.type === 'ticketmaster') {
-            logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
-            logoStyle = 'background: #0744BD;';
+            logoUrl = 'https://prod-assets.tmlat.com/Property_1_tk_geneal_35086c9515.png';
+            logoStyle = 'background: #FFFFFF;';
           } else if (button.type === 'bcp') {
             logoUrl = 'https://prod-assets.tmlat.com/Property_1_bcp_a58059fb93.png';
             logoStyle = 'background: #FFFFFF;';
@@ -1722,14 +1775,14 @@
             <div style="width: 800px; max-width: 700px; margin: 0 auto; background: #fff; border-bottom: 1px solid #D6D6D6; overflow: hidden;">
               <div style="display: flex; align-items: center; padding: 20px 24px; position: relative; justify-content: space-between; gap: 24px;">
                 <div style="width: 56px; height: 56px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; background: #FFFFFF !important; transform: translateZ(0); will-change: transform; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; ${logoStyle}">
-                  <img src="${logoUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; padding: 0; margin: 0;">
+                  <img src="${logoUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; padding: 0; margin: 0;" onerror="this.src='https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png'">
                   </div>
                 <div style="flex: 1;">
                   <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #262626; letter-spacing: 0.4px; line-height: 20px;">${button.title}</h2>
                   <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px;">
                     <div style="display: flex; align-items: center; gap: 4px; border: 1px solid #D6D6D6; border-radius: 4px; padding: 4px 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; height: 22px; letter-spacing: 0.24px; line-height: 20px;">
                       <span style="width: 10px; height: 10px; border-radius: 50%; background: ${dotColor};"></span>
-                      ${status.text}
+                      ${displayText}
     </div>
                     <span style="color: #7D7D7D; font-size: 16px; font-weight: 400; letter-spacing: 0.32px; line-height: 20px;">${button.date}</span>
   </div>
@@ -1776,6 +1829,7 @@
     document.getElementById('cancel-button').addEventListener('click', closeButtonEditor);
     closeButtonModal.addEventListener('click', closeButtonEditor);
     buttonType.addEventListener('change', handleTypeChange);
+    buttonStatus.addEventListener('change', handleStatusChange);
     
     // La protección de inputs ahora se maneja a través del contenedor modal-form-container
     
@@ -1948,13 +2002,13 @@
         // Determinar logo URL y clase según tipo
         let logoUrl, logoClass;
         if (button.type === 'custom') {
-          logoUrl = button.customLogoUrl || 'https://via.placeholder.com/56x56/000000/FFFFFF?text=LOGO';
+          logoUrl = button.customLogoUrl || 'https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png';
           logoClass = 'tmpe-logo-custom';
         } else if (button.type === 'interbank') {
           logoUrl = 'https://prod-assets.tmlat.com/Interbank_a8078b3014.png';
           logoClass = 'tmpe-logo-interbank';
         } else if (button.type === 'ticketmaster') {
-          logoUrl = 'https://prod-assets.tmlat.com/T_9318699a9f.svg';
+          logoUrl = 'https://prod-assets.tmlat.com/Property_1_tk_geneal_35086c9515.png';
           logoClass = 'tmpe-logo-ticketmaster';
         } else if (button.type === 'bcp') {
           logoUrl = 'https://prod-assets.tmlat.com/Property_1_bcp_a58059fb93.png';
@@ -1969,13 +2023,14 @@
 
         // Mapeo de estados
         const statusConfig = {
-          available: { text: 'DISPONIBLE', dot: 'tmpe-dot-available' },
-          soon: { text: 'PRÓXIMAMENTE', dot: 'tmpe-dot-soon' },
-          soldout: { text: 'AGOTADO', dot: 'tmpe-dot-soldout' },
-          canceled: { text: 'CANCELADO', dot: 'tmpe-dot-canceled' }
+          available: { text: 'DISPONIBLE', displayText: 'Disponible', dot: 'tmpe-dot-available' },
+          soon: { text: 'PRÓXIMAMENTE', displayText: 'Próximamente', dot: 'tmpe-dot-soon' },
+          soldout: { text: 'AGOTADO', displayText: 'Agotado', dot: 'tmpe-dot-soldout' },
+          canceled: { text: 'CANCELADO', displayText: 'Cancelado', dot: 'tmpe-dot-canceled' }
         };
 
         const currentStatus = statusConfig[button.status];
+        const displayText = button.statusDisplayText || currentStatus.displayText || currentStatus.text;
         
         // Generar botón desktop según estado
         let desktopButton;
@@ -2042,14 +2097,14 @@
     <!-- ${button.title} -->
     <div class="tmpe-ticket-item">
       <div class="tmpe-logo-container ${logoClass}">
-        <img class="tmpe-logo-img" src="${logoUrl}" alt="Logo">
+        <img class="tmpe-logo-img" src="${logoUrl}" alt="Logo" onerror="this.src='https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png'">
       </div>
       <div class="tmpe-info-container">
         <h2 class="tmpe-ticket-title">${button.title}</h2>
         <div class="tmpe-status-container">
           <div class="tmpe-status-badge">
             <span class="tmpe-status-dot ${currentStatus.dot}"></span>
-            <span style="color: #121212 !important; font-weight: 600 !important;">${currentStatus.text}</span>
+            <span style="color: #121212 !important; font-weight: 600 !important;">${displayText}</span>
           </div>
           <span class="tmpe-date-text">${button.date}</span>
         </div>
@@ -2068,7 +2123,7 @@
     <div class="tmpe-ticket-item">
       ${mobileWrapper}
         <div class="tmpe-logo-container ${logoClass}">
-          <img class="tmpe-logo-img" src="${logoUrl}" alt="Logo">
+          <img class="tmpe-logo-img" src="${logoUrl}" alt="Logo" onerror="this.src='https://prod-assets.tmlat.com/Property_1_visa_f8a51aef4b.png'">
         </div>
         <div class="tmpe-info-container">
           <h2 class="tmpe-ticket-title">${button.title}</h2>
@@ -2076,7 +2131,7 @@
             <span class="tmpe-date-text">${button.date}</span>
             <div class="tmpe-status-badge">
               <span class="tmpe-status-dot ${currentStatus.dot}"></span>
-              <span style="color: #121212 !important; font-weight: 600 !important;">${currentStatus.text}</span>
+              <span style="color: #121212 !important; font-weight: 600 !important;">${displayText}</span>
             </div>
           </div>
         </div>
@@ -2155,7 +2210,7 @@
 }
 
 .tmpe-logo-ticketmaster {
-  background: #0744BD;
+  background: #FFFFFF;
 }
 
 .tmpe-logo-bcp {
@@ -2171,7 +2226,7 @@
 }
 
 .tmpe-logo-custom {
-  background: #000000;
+  background: #FFFFFF;
 }
 
 .tmpe-logo-img {
